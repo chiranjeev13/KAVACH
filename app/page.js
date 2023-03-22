@@ -1,7 +1,16 @@
 import { Footer, Navbar } from '../components';
 import { About, Explore, Feedback, GetStarted, Hero, Insights, WhatsNew, World } from '../sections';
 
-const Home = () => (
+const Head = () => (
+    <>
+      <title>KAVACH BITCAKES</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/favicon.ico" />
+    </>
+  );
+  
+ 
+const Page = () => (
   <div className="bg-primary-black overflow-hidden">
     <Navbar />
     <Hero />
@@ -25,4 +34,6 @@ const Home = () => (
   </div>
 );
 
-export default Home;
+export default Page;Head;
+
+
