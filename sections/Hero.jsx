@@ -46,7 +46,7 @@ export default function Hero() {
         >
           <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" />
           <div className="absolute z-20 flex justify-center w-full mt-20">
-            <form className="w-1/2">
+            <form className="md:w-1/2">
               <div className="flex">
                 <button
                   id="dropdown-button"
