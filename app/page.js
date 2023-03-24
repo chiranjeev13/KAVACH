@@ -1,15 +1,23 @@
-import { Footer, Navbar } from '../components';
-import { About, Explore, Feedback, GetStarted, Hero, Insights, WhatsNew, World } from '../sections';
+import { Footer, Navbar } from "../components";
+import {
+  About,
+  Explore,
+  Feedback,
+  GetStarted,
+  Hero,
+  Insights,
+  WhatsNew,
+  World,
+} from "../sections";
 
 const Head = () => (
-    <>
-      <title>KAVACH BITCAKES</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
-    </>
-  );
-  
- 
+  <>
+    <title>KAVACH BITCAKE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" />
+  </>
+);
+
 const Page = () => (
   <div className="bg-primary-black overflow-hidden">
     <Navbar />
@@ -34,6 +42,5 @@ const Page = () => (
   </div>
 );
 
-export default Page;Head;
-
-
+export default Page;
+Head;

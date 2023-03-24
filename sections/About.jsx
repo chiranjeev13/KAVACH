@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { TypingText } from "../components";
+import { title } from "@/Constants";
 
 import styles from "../styles";
 import { fadeIn, staggerContainer } from "../utils/motion";
@@ -16,21 +17,23 @@ const About = () => (
       viewport={{ once: false, amount: 0.25 }}
       className={`${styles.innerWidth} mx-auto ${styles.flexCenter} flex-col`}
     >
-      <TypingText title=" About our Tool " textStyles="text-center" />
+      <TypingText title=" About our Platform " textStyles="text-center" />
 
       <motion.p
         variants={fadeIn("up", "tween", 0.2, 1)}
         className="mt-[8px] font-normal sm:text-[32px] text-[20px] text-center text-secondary-white"
       >
-        <span className="font-extrabold text-white"></span> is a tool which can
-         detect Vulnerable Crypto currencies and generate A Risk factor of the given address.  {" "}
+        <span className="font-extrabold text-white"></span> {title} is a tool which can
+        detect Vulnerable Crypto currencies and generate a risk factor of the
+        given address.{" "}
         <span className="font-extrabold text-white">
-          The Crypto Detection uses 
+          The Crypto Detection uses
         </span>{" "}
         APIs of Etherscan to give the required Data{" "}
-        <span className="font-extrabold text-white"> Cryptos such as Ether,Tether </span> 
-        {" "}
-        
+        <span className="font-extrabold text-white">
+          {" "}
+          Cryptos such as Ether,Tether{" "}
+        </span>{" "}
       </motion.p>
 
       <motion.img
