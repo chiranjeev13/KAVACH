@@ -19,8 +19,7 @@ const World = () => (
       <TypingText title="| People on the World" textStyles="text-center" />
       <TitleText
         title={(
-          <>Track friends around you and invite them to play together in the same
-            world
+          <>Experience the new level of safety and make your crypto-currency experience secure. 
           </>
         )}
         textStyles="text-center"
