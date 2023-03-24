@@ -21,8 +21,8 @@ export const exploreWorlds = [
   },
   {
     id: 'world-5',
-    imgUrl: '/planet-05.png',
-    title: 'Hawkins Labs',
+    imgUrl: '/planet-05.jpg',
+    title: 'Monero',
   },
 ];
 
@@ -35,15 +35,15 @@ export const startingFeatures = [
 export const newFeatures = [
   {
     imgUrl: '/vrpano.svg',
-    title: 'A new world',
+    title: 'Information about the Token',
     subtitle:
-        'we have the latest update with new world for you to try never mind',
+        'AI will generate a risk factor for the token using  3 Layer Verification  ',
   },
   {
-    imgUrl: '/headset.svg',
-    title: 'More realistic',
+    imgUrl: '/headset.png',
+    title: 'More Efficient',
     subtitle:
-        'In the latest update, your eyes are narrow, making the world more realistic than ever',
+        'more efficient and faster than the traditional methods of verification',
   },
 ];
 
