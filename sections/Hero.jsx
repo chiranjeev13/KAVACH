@@ -1,17 +1,28 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable quotes */
 // "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { title } from "../constants";
 import styles from "../styles";
 import { slideIn, staggerContainer, textVariant } from "../utils/motion";
+import { AppConfig } from "@/pages/context/AppConfig";
 
 export default function Hero() {
-  const [network, setNetwork] = useState("Network");
+  const {
+    setNetwork,
+    network,
+    getTokenSymbol,
+    ERC20Check,
+    verifiedOrNot,
+    returnOwner,
+    getTokenDecimals,
+    computeCirculation,
+  } = useContext(AppConfig);
+  const [tokenAddress, setTokenAddress] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-  const networks = ["Polygon", "Ethereum", "BSC"];
-
+  const networks = ["Polygon", "Ethereum"];
+  console.log(network);
   return (
     <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
       <motion.div
@@ -100,13 +111,15 @@ export default function Hero() {
                 </div>
                 <div className="relative w-full z-50">
                   <input
+                    onChange={(e) => setTokenAddress(e.target.value)}
                     type="search"
                     id="search-dropdown"
                     className="block p-2.5 w-full z-30 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-100 border-l-2 border border-gray-300"
-                    placeholder="Search"
+                    placeholder="Enter Token Address"
                     required
                   />
                   <button
+                    onClick={() => computeCirculation(tokenAddress)}
                     type="submit"
                     className="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800"
                   >
