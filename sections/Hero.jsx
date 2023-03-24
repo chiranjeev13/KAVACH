@@ -25,7 +25,9 @@ const Hero = () => (
         >
           <h1 className={styles.heroHeading}></h1>
           <div className="flex flex-col justify-center text-white font-bold text-3xl">
-            <p className="text-7xl text-white font-extrabold flex justify-center">{title}</p>
+            <p className="text-7xl text-white font-extrabold flex justify-center">
+              {title}
+            </p>
             <p>Scan and verify your token before deploying it on the chain</p>
           </div>
           <h1 className={styles.heroHeading}></h1>
@@ -37,7 +39,48 @@ const Hero = () => (
         className="relative w-full md:-mt-[20px] -mt-[12px]"
       >
         <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" />
+        <div className="absolute z-20 flex justify-center w-full mt-20">
+          <form className="w-1/2">
+            <label
+              className="mb-2 text-sm font-medium sr-only text-white"
+            >
+              Search
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="search"
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white dark:placeholder-gray-400 dark:text-white"
+                placeholder="Search"
+                required
+              />
+              <button
+                type="submit"
+                className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 "
+              >
+                Search
+              </button>
+            </div>
+          </form>
 
+        </div>
         <img
           src="/cover.png"
           alt="hero_cover"
@@ -46,11 +89,6 @@ const Hero = () => (
 
         <a href="#explore">
           <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
-            {/* <img
-              src="/stamp.png"
-              alt="stamp"
-              className="sm:w-[155px] w-[100px] sm:h-[155px] h-[100px] object-contain"
-            /> */}
           </div>
         </a>
       </motion.div>
