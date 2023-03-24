@@ -27,9 +27,9 @@ export const exploreWorlds = [
 ];
 
 export const startingFeatures = [
-  'Find a world that suits you and you want to enter',
-  'Enter the world by reading basmalah to be safe',
-  'No need to beat around the bush, just stay on the gas and have fun',
+  'Select the Type of currency you want to track',
+  'Enter the Token Address ',
+  ' Crypto Tool will detect Risk Factor and declare it as Safe or Unsafe',
 ];
 
 export const newFeatures = [
