@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Footer, Navbar } from '../components';
-import { About, Explore, Feedback, GetStarted, Hero, Insights, WhatsNew, World } from '../sections';
+import { About, Explore, Feedback, GetStarted, Hero, bar, WhatsNew, World } from '../sections';
 import { AppConfig } from './context/AppConfig';
 
 
@@ -11,6 +11,7 @@ function Home() {
     <div className="bg-primary-black overflow-hidden">
       <Navbar />
       <Hero />
+      <bar/>
       <div className="relative">
         <About />
         <div className="gradient-03 z-0" />

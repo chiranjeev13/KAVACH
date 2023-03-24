@@ -26,7 +26,7 @@ const Footer = () => (
             className="w-[24px] h-[24px] object-contain"
           />
           <span className="font-normal text-[16px] text-white">
-            Chat
+            
           </span>
         </button>
       </div>

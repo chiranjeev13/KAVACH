@@ -6,9 +6,11 @@ import WhatsNew from './WhatsNew';
 import World from './World';
 import Insights from './Insights';
 import Feedback from './Feedback';
+import bar from './bar';
 
 export {
   Hero,
+  bar,
   About,
   Explore,
   GetStarted,

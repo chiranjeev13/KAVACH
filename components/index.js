@@ -11,6 +11,7 @@ export {
   TitleText,
   TypingText,
   StartSteps,
+  
   NewFeatures,
   ExploreCard,
   //InsightCard,
