@@ -86,3 +86,5 @@ export const socials = [
     url: '/facebook.svg',
   },
 ];
+
+export const title = 'Eth-Cops';
