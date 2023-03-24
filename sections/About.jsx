@@ -29,10 +29,10 @@ const About = () => (
         <span className="font-extrabold text-white">
           The Crypto Detection uses
         </span>{" "}
-        APIs of Etherscan to give the required Data{" "}
+        Blockchain APIs to give the required Data{" "}
         <span className="font-extrabold text-white">
           {" "}
-          Cryptos such as Ether,Tether{" "}
+          Cryptos such as Ether,Tether,Dogecoin,Monero etc.{" "}
         </span>{" "}
       </motion.p>
 
