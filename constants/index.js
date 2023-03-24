@@ -68,23 +68,23 @@ export const insights = [
   },
 ];
 
-export const socials = [
-  {
-    name: 'twitter',
-    url: '/twitter.svg',
-  },
-  {
-    name: 'linkedin',
-    url: '/linkedin.svg',
-  },
-  {
-    name: 'instagram',
-    url: '/instagram.svg',
-  },
-  {
-    name: 'facebook',
-    url: '/facebook.svg',
-  },
-];
+// export const socials = [
+//   {
+//     name: 'twitter',
+//     url: '/twitter.svg',
+//   },
+//   {
+//     name: 'linkedin',
+//     url: '/linkedin.svg',
+//   },
+//   {
+//     name: 'instagram',
+//     url: '/instagram.svg',
+//   },
+//   {
+//     name: 'facebook',
+//     url: '/facebook.svg',
+//   },
+// ];
 
 export const title = 'Eth-Cops';

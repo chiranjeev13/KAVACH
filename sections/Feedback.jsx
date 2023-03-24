@@ -26,9 +26,7 @@ const Feedback = () => (
         </div>
 
         <p className="mt-[24px] font-normal sm:text-[24px] text-[18px] sm:leading-[45.6px] leading-[39.6px] text-white">
-          “With the development of today's technology, metaverse is very
-          useful for today's work, or can be called web 3.0. by using
-          metaverse you can use it as anything”
+          ~We have developed a platform that allows government agencies to find vulnerabilities in a token on a specific Blockchain network. Using our Platform they can declare the token as safe or unsafe for use.
         </p>
       </motion.div>
 
@@ -40,7 +38,7 @@ const Feedback = () => (
           src="/planet-09.png"
           alt="planet-09"
           className="w-full lg:h-[610px] h-auto min-h-[210px] object-cover rounded-[40px]"
-        />
+        />sas
       </motion.div>
     </motion.div>
   </section>
