@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable quotes */
 // "use client";
 import { useState } from "react";
