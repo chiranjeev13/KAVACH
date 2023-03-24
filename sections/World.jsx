@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-import styles from '../styles';
-import { TitleText, TypingText } from '../components';
-import { fadeIn, staggerContainer } from '../utils/motion';
+import styles from "../styles";
+import { TitleText, TypingText } from "../components";
+import { fadeIn, staggerContainer } from "../utils/motion";
 
 const World = () => (
   <section className={`${styles.paddings} relative z-10`}>
@@ -15,21 +15,26 @@ const World = () => (
       viewport={{ once: false, amount: 0.25 }}
       className={`${styles.innerWidth} mx-auto flex flex-col`}
     >
-
-      <TypingText title="| People on the World" textStyles="text-center" />
+      <TypingText title="" textStyles="text-center" />
       <TitleText
-        title={(
-          <>Experience the new level of safety and make your crypto-currency experience secure. 
+        title={
+          <>
+            Experience the new level of safety and make your crypto-currency
+            experience secure.
           </>
-        )}
+        }
         textStyles="text-center"
       />
 
       <motion.div
-        variants={fadeIn('up', 'tween', 0.3, 1)}
+        variants={fadeIn("up", "tween", 0.3, 1)}
         className="relative mt-[68px] flex w-full h-[550px]"
       >
-        <img src="/map.jpeg" alt="map" className="w-full h-full object-cover rounded-3xl" />
+        <img
+          src="/map.jpeg"
+          alt="map"
+          className="w-full h-full object-cover rounded-3xl"
+        />
 
         {/* <div className="absolute bottom-20 right-20 w-[70px] h-[70px] p-[6px] rounded-full bg-[#5D6680]">
           <img src="people-01.png" alt="people" className="w-full h-full" />
