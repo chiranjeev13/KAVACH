@@ -10,7 +10,7 @@ import contrAbi from "../context/abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 
-export default const AppProvider = ({ children }) => {
+export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [totalSupply, setTotalSupply] = useState("");
