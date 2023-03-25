@@ -8,7 +8,7 @@ import styles from "../styles";
 import { slideIn, staggerContainer, textVariant } from "../utils/motion";
 import { AppConfig } from "@/pages/context/AppConfig";
 
-export default function Hero() {
+export default function Hero(props) {
   const {
     setNetwork,
     network,
@@ -22,7 +22,7 @@ export default function Hero() {
   const [tokenAddress, setTokenAddress] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
   const networks = ["Polygon", "Ethereum"];
-  console.log(network);
+  // console.log(network);
   return (
     <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
       <motion.div
@@ -46,7 +46,7 @@ export default function Hero() {
               <p className="text-7xl text-white font-extrabold flex justify-center">
                 {title}
               </p>
-              <p>Scan and verify your token before deploying it on the chain</p>
+              <p>Smart Token Analyzer and vulnerability detector</p>
             </div>
             <h1 className={styles.heroHeading}></h1>
           </motion.div>
@@ -97,6 +97,7 @@ export default function Hero() {
                         onClick={() => {
                           setNetwork(Network);
                           setShowDropDown(false);
+                          props.setNetwork(Network);
                         }}
                       >
                         <a
@@ -111,7 +112,10 @@ export default function Hero() {
                 </div>
                 <div className="relative w-full z-50">
                   <input
-                    onChange={(e) => setTokenAddress(e.target.value)}
+                    onChange={(e) => {
+                      setTokenAddress(e.target.value);
+                      props.setTokenAddress(e.target.value);
+                    }}
                     type="search"
                     id="search-dropdown"
                     className="block p-2.5 w-full z-30 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-100 border-l-2 border border-gray-300"
@@ -119,7 +123,10 @@ export default function Hero() {
                     required
                   />
                   <button
-                    onClick={() => computeCirculation(tokenAddress)}
+                    onClick={() => {
+                      props.setShowResult(true);
+                      console.log("printed");
+                    }}
                     type="submit"
                     className="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800"
                   >

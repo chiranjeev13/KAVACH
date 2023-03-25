@@ -1,35 +1,33 @@
+/* eslint-disable prefer-const */
+/* eslint-disable camelcase */
+/* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
-const axios = require('axios');
-const cheerio = require('cheerio');
-const pretty = require('pretty');
-const jsdom = require('jsdom');
+const axios = require("axios");
+const cheerio = require("cheerio");
+const pretty = require("pretty");
 
-const { JSDOM } = jsdom;
+export default async function scrapper(token_address) {
+  const domain = "https://etherscan.io/token/";
+  const url = domain + token_address;
 
-export default async function scrapper(tokenAddress) {
-  const domain = 'https://etherscan.io/token/';
-  const url = domain + tokenAddress;
-
-  // getting the html as string
   const res = await axios.get(url);
-  const $ = cheerio.load(res.data);
-  const data = pretty($.html());
+  let $ = cheerio.load(res.data);
+  let data = pretty($.html());
 
-  // parsing the html string
-  const dom = new JSDOM(data);
-  const scripts = dom.window.document.getElementById(
-    'ContentPlaceHolder1_tr_tokenHolders'
-  );
-  const mainData = scripts.innerHTML.toString();
+  const start = data.indexOf("ContentPlaceHolder1_tr_tokenHolders") + 5;
+  const end = data.substring(start + 244, start + 300);
+  const endIndex = end.indexOf("<");
+  let ans = data
+    .substring(start + 230, start + 244 + endIndex)
+    .trim()
+    .replace(",", "");
 
-  // extracting the number of holders
-  const start = mainData.indexOf('<div>') + 5;
-  const end = mainData.indexOf('<span') - 1;
-  const ans = mainData.substring(start, end).trim().replace(',', '');
+  // removing the commas
+  ans = ans.replace(",", "");
 
   // parsing the answer
   // eslint-disable-next-line radix
   const response = parseInt(ans);
-  
+  console.log(response);
   return response;
 }

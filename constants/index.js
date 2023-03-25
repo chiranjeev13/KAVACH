@@ -87,4 +87,4 @@ export const newFeatures = [
 //   },
 // ];
 
-export const title = 'Eth-Cops';
+export const title = 'ETH-Cops';
