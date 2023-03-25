@@ -14,25 +14,22 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Procedure-
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1)User enters the address of the token.
+2)We utilize smart contract APIs and integration libraries like Ethers.js and Web3.js to retrieve the necessary details of the token.
+3)Based on the retrieved information, we analyze the contract and generate a risk factor.
+4)The risk factor is calculated through three layers of verification checks:
+5)The first check determines if the contract is verified or not.
+6)The second check calculates a number by comparing the token creator's balance with their balance of that token.
+7)The final check is based on the number of token holders.
+8)The results of the three verification checks are combined in to an algorithm to provide a final risk factor number as the output of the analysis.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Website Preview
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![WhatsApp Image 2023-03-25 at 1 56 18 PM](https://user-images.githubusercontent.com/94173505/227706669-82d109cf-0ee5-49bb-999f-4581492aeca8.jpeg)
+![WhatsApp Image 2023-03-25 at 1 59 59 PM](https://user-images.githubusercontent.com/94173505/227706684-8bb3e305-8642-49ce-892d-b79c679a9b63.jpeg)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![WhatsApp Image 2023-03-25 at 1 59 59 PM(1)](https://user-images.githubusercontent.com/94173505/227706729-89567fd7-5e8d-46ad-a791-6dd33ad16507.jpeg)
+![WhatsApp Image 2023-03-25 at 1 59 59 PM(2)](https://user-images.githubusercontent.com/94173505/227706735-8193f74f-62e8-424e-b0c5-8bc0f0dfe944.jpeg)
+![WhatsApp Image 2023-03-25 at 2 06 09 PM](https://user-images.githubusercontent.com/94173505/227706830-8eceede0-7b1f-4747-8b62-ffdf41c5d5f4.jpeg)
