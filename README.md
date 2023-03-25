@@ -1,6 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# ETH-COPS
+
+Smart Token Analyzer and Vulnerability Detector
+
+## Features
+
+- Using ether.js & WEB3JS to interact with each ERC-20 contract and investigate each details about the contract.
+- Check whether the input address is a valid ERC20 Token or not
+- Frontend development using NextJS.
+- Works with Ethereum and Polygon Mainnet
+
+
+## How it Works ?
+
+- User enters the address of the token.
+- We utilize smart contract APIs and integration libraries like Ethers.js and Web3.js to retrieve the necessary details of the token.
+- Based on the retrieved information, we analyze the contract and generate a risk factor.
+- The risk factor is calculated through three layers of verification checks:
+- The first check determines if the contract is verified or not.
+- The second check calculates a number by comparing the token creator's balance with their balance of that token.
+- The final check is based on the number of token holders.
+- The results of the three verification checks are combined to provide a final risk factor number as the output of the analysis.
+- We make use of of smart contract API providers from INFURA and ALCHEMY to fetch the token details on chain
+
+## Screenshots
+
+![WhatsApp Image 2023-03-25 at 13 56 17](https://user-images.githubusercontent.com/90638995/227706610-2dc40bca-92e6-49c6-9c4a-3b555a21c464.jpg)
+![WhatsApp Image 2023-03-25 at 13 59 58](https://user-images.githubusercontent.com/90638995/227706625-61322dca-a756-46e9-a466-0d41fd796d7e.jpg)
+
+![WhatsApp Image 2023-03-25 at 14 06 08](https://user-images.githubusercontent.com/90638995/227706701-532456a9-e7a4-491a-8718-b5115076f25f.jpg)
+
+
+## Tech Stack
+
+**Client:** NEXT.js
+
+**Server:** Ethers.js, Web3.js, Node.js, Infura API Provider, Alchemy API Provider
+
+
+## Future Developments
+
+- Support on more blockchains like the Binance Smart Chain and Monero
+
+- Smart contract audit reports
+
+## To run this App
 
 First, run the development server:
 
@@ -12,27 +56,3 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
