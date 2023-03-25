@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AppProvider } from "./context/AppConfig";
+import { AppProvider } from "../context/AppConfig";
 
 import "../styles/globals.css";
 //const app = require('..//app/app');
