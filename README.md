@@ -17,12 +17,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Procedure-
 
 1)User enters the address of the token.
+
+
 2)We utilize smart contract APIs and integration libraries like Ethers.js and Web3.js to retrieve the necessary details of the token.
+
 3)Based on the retrieved information, we analyze the contract and generate a risk factor.
+
 4)The risk factor is calculated through three layers of verification checks:
+
 5)The first check determines if the contract is verified or not.
+
 6)The second check calculates a number by comparing the token creator's balance with their balance of that token.
+
 7)The final check is based on the number of token holders.
+
 8)The results of the three verification checks are combined in to an algorithm to provide a final risk factor number as the output of the analysis.
 
 Website Preview
