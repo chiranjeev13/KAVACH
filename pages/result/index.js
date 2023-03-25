@@ -112,7 +112,7 @@ function Result(props) {
             <p className="font-bold text-5xl">Token Details</p>
             <p>Token Address: {props.tokenAddress}</p>
             <p>Network: {props.network}</p>
-            <p>{symbol}</p>
+            <p>Token Name: {symbol}</p>
           </div>
           <div>
             <b className="text-5xl">Tests</b>
