@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 import { useContext, useEffect, useState } from "react";
 import { Footer, Navbar } from "../../components";
-import { AppConfig } from "../context/AppConfig";
+import { AppConfig } from "../../context/AppConfig";
 // import { tick } from "../../public/tick.png";
 // import scrapper from "../scrapper/scrapper";
 // import { Checkmark } from "react-checkmark";

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { title } from "../constants";
 import styles from "../styles";
 import { slideIn, staggerContainer, textVariant } from "../utils/motion";
-import { AppConfig } from "@/pages/context/AppConfig";
+import { AppConfig } from "@/context/AppConfig";
 
 export default function Hero(props) {
   const {

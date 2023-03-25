@@ -14,7 +14,7 @@ import {
   World,
 } from "../sections";
 import Result from "./result";
-import { AppConfig } from "./context/AppConfig";
+import { AppConfig } from "../context/AppConfig";
 
 function Home() {
   const {

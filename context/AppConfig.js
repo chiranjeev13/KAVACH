@@ -6,9 +6,8 @@
 import React, { useState, createContext, useEffect } from "react";
 export const AppConfig = createContext();
 import { ethers } from "ethers";
-import contrAbi from "../context/abi.json";
+import contrAbi from "./abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-
 
 export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
@@ -210,7 +209,7 @@ export const AppProvider = ({ children }) => {
         const data = await token.json();
         console.log("data", data.result);
         if (data.result) {
-        //   setIsERC20(true);
+          //   setIsERC20(true);
           setTotalSupply(data.result);
           console.log(totalSupply);
           return true;
@@ -224,7 +223,7 @@ export const AppProvider = ({ children }) => {
         const data = await token.json();
         console.log("data", data.result);
         if (data.result) {
-        //   setIsERC20(true);
+          //   setIsERC20(true);
           setTotalSupply(data.result);
           console.log(data.result.substring(0, 4));
           return true;
