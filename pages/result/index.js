@@ -19,12 +19,14 @@ function Result(props) {
     getTokenSymbol,
     totalSupply,
     riskFactor,
+    getTokenDecimals
   } = useContext(AppConfig);
 
   const [ERC20Verified, setERC20Verified] = useState(false);
   const [verified, setverified] = useState(false);
-  const [circulation, setCirculation] = useState("98");
+  const [circulation, setCirculation] = useState("");
   const [symbol, setSymbol] = useState("");
+  const [decimals, setDecimals] = useState("");
   //   const [riskfactor, setRiskFactor] = useState(0);
 
   //   console.log(props.tokenAddress);
@@ -70,11 +72,17 @@ function Result(props) {
     setSymbol(Symbol);
   }
 
+  async function getDecimals() {
+    const Decimals = await getTokenDecimals(props.tokenAddress);
+    console.log("Decimals::" , Decimals);
+    setDecimals(Decimals);
+  }
+
   //   const methods = [callERC20, callVerification, callCirculationSupply];
 
   useEffect(() => {
     getSymbol();
-
+    getDecimals();
     async function callMethods() {
       await callCirculationSupply();
     }
@@ -113,6 +121,7 @@ function Result(props) {
             <p>Token Address: {props.tokenAddress}</p>
             <p>Network: {props.network}</p>
             <p>Token Name: {symbol}</p>
+            <p>Token decimals: {decimals}</p>
           </div>
           <div>
             <b className="text-5xl">Tests</b>

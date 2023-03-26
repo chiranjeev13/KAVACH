@@ -39,6 +39,7 @@ export const AppProvider = ({ children }) => {
     console.log(totalSupply);
     await returnOwner(tokenAddress, Network);
     await returnOwner(tokenAddress, Network);
+    await getTokenDecimals(tokenAddress);
     console.log(contractDeployer);
     const ownerbalance = await returnBalanceOfTokens(
       contractDeployer,
@@ -148,6 +149,7 @@ export const AppProvider = ({ children }) => {
         );
         const decimals = await tokenContract.methods.decimals().call();
         setDecimals(decimals);
+        return decimals;
       }
       if (network === "Polygon") {
         const tokenContract = new web3P.eth.Contract(
@@ -156,8 +158,9 @@ export const AppProvider = ({ children }) => {
         );
         const decimals = await tokenContract.methods.decimals().call();
         setDecimals(decimals);
+        return decimals;
       }
-      console.log(decimals);
+      console.log("decimals" , decimals);
     } catch (error) {
       console.log("Error thrown by getTokenSymbol", error);
     }
