@@ -61,8 +61,8 @@ export const AppProvider = ({ children }) => {
     let circulation = 0.0;
     if (parseInt(totalsupply) !== 0) {
       circulation =
-        ((parseInt(totalsupply) - parseInt(ownerbalance)) * 100) /
-        parseInt(totalsupply);
+        (((parseInt(totalsupply) - parseInt(ownerbalance))) /
+        parseInt(totalsupply)) * 100;
     }
 
     let risk = 0.0;
