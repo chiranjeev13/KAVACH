@@ -21,7 +21,7 @@ export default function Hero(props) {
   } = useContext(AppConfig);
   const [tokenAddress, setTokenAddress] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-  const networks = ["Polygon", "Ethereum"];
+  const networks = ["Polygon", "Ethereum","BSC"];
   // console.log(network);
   return (
     <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
