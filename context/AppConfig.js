@@ -8,6 +8,7 @@ export const AppConfig = createContext();
 import { ethers } from "ethers";
 import contrAbi from "./abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { AnkrProvider } from "@ankr.com/ankr.js";
 
 export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
@@ -32,6 +33,10 @@ export const AppProvider = ({ children }) => {
   const web3P = createAlchemyWeb3(
     "https://polygon-mainnet.g.alchemy.com/v2/euZGVMQC1nnZiDkoqQAFRzC1f-zg8TV0"
   );
+
+  const web3B = new AnkrProvider();
+  const web3Ba = new createAlchemyWeb3("https://bsc-dataseed2.binance.org/");
+
   const computeCirculation = async (tokenAddress, Network) => {
     console.log(tokenAddress);
     console.log(Network);
@@ -61,8 +66,9 @@ export const AppProvider = ({ children }) => {
     let circulation = 0.0;
     if (parseInt(totalsupply) !== 0) {
       circulation =
-        (((parseInt(totalsupply) - parseInt(ownerbalance))) /
-        parseInt(totalsupply)) * 100;
+        ((parseInt(totalsupply) - parseInt(ownerbalance)) /
+          parseInt(totalsupply)) *
+        100;
     }
 
     let risk = 0.0;
@@ -108,6 +114,17 @@ export const AppProvider = ({ children }) => {
           return false;
         }
       }
+
+      if (Network === "BSC") {
+        const contract = await fetch(
+          `https://api.bscscan.com/api?module=contract&action=getabi&address=${tokenAddress}&apikey=67UMGA5UTJ8WRJXPHXC79VWBB2CHMPHXHK`
+        );
+        const data = await contract.json();
+        if (data.message === "OK") {
+          setIsVerified(true);
+          return true;
+        }
+      }
     } catch (error) {
       console.log("Error occured in the verified function - ", isVerified);
       return false;
@@ -129,6 +146,15 @@ export const AppProvider = ({ children }) => {
         const tokenContract = new web3P.eth.Contract(
           abi,
           web3P.utils.toChecksumAddress(tokenAddress)
+        );
+        const symbol = await tokenContract.methods.symbol().call();
+        setSymbol(symbol);
+        return symbol;
+      }
+      if (Network === "BSC") {
+        const tokenContract = new web3Ba.eth.Contract(
+          abi,
+          web3Ba.utils.toChecksumAddress(tokenAddress)
         );
         const symbol = await tokenContract.methods.symbol().call();
         setSymbol(symbol);
@@ -160,7 +186,16 @@ export const AppProvider = ({ children }) => {
         setDecimals(decimals);
         return decimals;
       }
-      console.log("decimals" , decimals);
+      if (network === "BSC") {
+        const tokenContract = new web3Ba.eth.Contract(
+          abi,
+          web3Ba.utils.toChecksumAddress(tokenAddress)
+        );
+        const symbol = await tokenContract.methods.decimals().call();
+        setSymbol(symbol);
+        return symbol;
+      }
+      console.log("decimals", decimals);
     } catch (error) {
       console.log("Error thrown by getTokenSymbol", error);
     }
@@ -195,6 +230,22 @@ export const AppProvider = ({ children }) => {
           return data.result;
         }
         console.log(isERC20);
+      }
+      if (Network === "BSC") {
+        const erc = await web3B.getTokenHoldersCount({
+          blockchain: "bsc",
+          contractAddress: tokenAddress,
+        });
+
+        if (erc.tokenDecimals > 0) {
+          const token = await fetch(
+            `https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${tokenAddress}&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
+          );
+          setTotalSupply((await token.json()).result);
+          setIsERC20(true);
+          console.log(isERC20);
+          return true;
+        }
       }
     } catch (error) {
       console.log("Error occured while ERC20Check function - ", error);

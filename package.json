@@ -2,6 +2,7 @@
   "name": "ETH-Cops",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.4.7",
+    "@ankr.com/ankr.js": "^0.3.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.14",
