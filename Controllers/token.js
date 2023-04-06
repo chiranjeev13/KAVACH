@@ -58,6 +58,7 @@ exports.addToken = async (req, res, next) => {
         success: true,
     
         data: token
+        
     
         });
     
