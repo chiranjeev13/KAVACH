@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .env
+test_bsc.js
 # testing
 /coverage
 
