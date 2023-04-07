@@ -9,6 +9,7 @@ import { ethers } from "ethers";
 import contrAbi from "./abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { AnkrProvider } from "@ankr.com/ankr.js";
+import { Network } from "alchemy-sdk";
 
 export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
@@ -19,7 +20,8 @@ export const AppProvider = ({ children }) => {
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState("");
   const [network, setNetwork] = useState("Network");
-  const [riskFactor, setRiskFactor] = useState(0.0);
+  const [riskFactor, setRiskFactor] = useState(0);
+  const [holders, setHolders] = useState(0);
   // web3 provider
   const abi = contrAbi.abi;
   // "https://mainnet.infura.io/v3/13cbc4197182486485f1ebcb24068938"
@@ -45,6 +47,7 @@ export const AppProvider = ({ children }) => {
     await returnOwner(tokenAddress, Network);
     await returnOwner(tokenAddress, Network);
     await getTokenDecimals(tokenAddress);
+    const holds = await returnHolders(tokenAddress, Network);
     console.log(contractDeployer);
     const ownerbalance = await returnBalanceOfTokens(
       contractDeployer,
@@ -75,9 +78,29 @@ export const AppProvider = ({ children }) => {
     if (!verify) {
       setRiskFactor(100);
     } else if (verify && isEC2) {
-      risk += 33.33;
-      risk += (100 - circulation) / 3;
-      setRiskFactor(risk);
+      console.log("toooool", holds);
+      let avgWalletbal =
+        parseInt(totalsupply.substring(0, totalsupply.length - decimals)) /
+        holds;
+      let avgWalletbalper =
+        (avgWalletbal /
+          parseInt(totalsupply.substring(0, totalsupply.length - decimals))) *
+        100;
+
+      console.log(
+        "bppp",
+        parseInt(totalsupply.substring(0, totalSupply.length - decimals))
+      );
+
+      console.log("avg", decimals);
+      if (avgWalletbalper <= 5) {
+        risk = 100 - 33.33 - circulation / 3 - 33.33;
+        setRiskFactor(risk);
+      } else {
+        risk = 100 - avgWalletbalper / 3 - circulation / 3 - 33.33;
+        setRiskFactor(risk);
+      }
+      console.log(risk);
     }
 
     console.log(circulation * 100);
@@ -241,10 +264,14 @@ export const AppProvider = ({ children }) => {
           const token = await fetch(
             `https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${tokenAddress}&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
           );
-          setTotalSupply((await token.json()).result);
-          setIsERC20(true);
-          console.log(isERC20);
-          return true;
+          const data = await token.json();
+          console.log("data", data.result);
+          if (data.result !== "0") {
+            setIsERC20(true);
+            setTotalSupply(data.result);
+            console.log(data.result.substring(0, 4));
+            return data.result;
+          }
         }
       }
     } catch (error) {
@@ -273,6 +300,20 @@ export const AppProvider = ({ children }) => {
       if (Network === "Ethereum") {
         const token = await fetch(
           `https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${tokenAddress}&apikey=VH1C8WZCNYE12YZB3M5YETM82KGPNHI6SI`
+        );
+        const data = await token.json();
+        console.log("data", data.result);
+        if (data.result) {
+          //   setIsERC20(true);
+          setTotalSupply(data.result);
+          console.log(data.result.substring(0, 4));
+          return true;
+        }
+        console.log(isERC20);
+      }
+      if (Network === "BSC") {
+        const token = await fetch(
+          `https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${tokenAddress}&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
         );
         const data = await token.json();
         console.log("data", data.result);
@@ -322,6 +363,21 @@ export const AppProvider = ({ children }) => {
         console.log("Error thrown by returnOwner function - ");
       }
     }
+    if (network === "BSC") {
+      try {
+        const owner = await fetch(
+          `https://api.bscscan.com/api?module=contract&action=getcontractcreation&contractaddresses=${tokenAddress}&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
+        );
+        const data = await owner.json();
+        console.log(data.result[0].contractCreator);
+        const acc = data.result[0].contractCreator;
+        setContractDeployer(acc);
+        console.log(acc);
+        return acc;
+      } catch (error) {
+        console.log("error thrown by returnowner func");
+      }
+    }
   };
 
   const returnBalanceOfTokens = async (
@@ -362,6 +418,24 @@ export const AppProvider = ({ children }) => {
         console.log("Error thrown by returnBalance function - ");
       }
     }
+
+    if (Network === "BSC") {
+      try {
+        console.log(contractDeployer);
+        const bal = await fetch(
+          `https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${acc}&tag=latest&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
+        );
+        const data = await bal.json();
+        console.log("first");
+        // console.log(data.result)
+        console.log(data);
+        setOwnerBalance(data.result);
+        console.log(data.result.substring(0, 4));
+        return data.result;
+      } catch (error) {
+        console.log("Error thrown by returnBalance function - ");
+      }
+    }
   };
 
   // const returnABI = async (tokenAddress) => {
@@ -375,6 +449,46 @@ export const AppProvider = ({ children }) => {
   //         console.log("Error generated by returnABI function", error)
   //     }
   // }
+
+  //HOLDERS
+  const returnHolders = async (tokenAddress, Network) => {
+    if (Network === "Ethereum") {
+      try {
+        const hold = await web3B.getTokenHoldersCount({
+          blockchain: "eth",
+          contractAddress: tokenAddress,
+        });
+        setHolders(hold.latestHoldersCount);
+        return hold.latestHoldersCount;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (Network === "Polygon") {
+      try {
+        const hold = await web3B.getTokenHoldersCount({
+          blockchain: "polygon",
+          contractAddress: tokenAddress,
+        });
+        setHolders(hold.latestHoldersCount);
+        return hold.latestHoldersCount;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (Network === "BSC") {
+      try {
+        const hold = await web3B.getTokenHoldersCount({
+          blockchain: "bsc",
+          contractAddress: tokenAddress,
+        });
+        setHolders(hold.latestHoldersCount);
+        return hold.latestHoldersCount;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <AppConfig.Provider
       value={{
@@ -393,6 +507,7 @@ export const AppProvider = ({ children }) => {
         network,
         getTokenDecimals,
         riskFactor,
+        returnHolders,
       }}
     >
       {children}

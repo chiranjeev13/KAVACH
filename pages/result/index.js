@@ -19,7 +19,8 @@ function Result(props) {
     getTokenSymbol,
     totalSupply,
     riskFactor,
-    getTokenDecimals
+    getTokenDecimals,
+    returnHolders,
   } = useContext(AppConfig);
 
   const [ERC20Verified, setERC20Verified] = useState(false);
@@ -27,7 +28,7 @@ function Result(props) {
   const [circulation, setCirculation] = useState("");
   const [symbol, setSymbol] = useState("");
   const [decimals, setDecimals] = useState("");
-  //   const [riskfactor, setRiskFactor] = useState(0);
+  const [Holders, setHolders] = useState(0);
 
   //   console.log(props.tokenAddress);
   //   console.log(props.network);
@@ -74,8 +75,13 @@ function Result(props) {
 
   async function getDecimals() {
     const Decimals = await getTokenDecimals(props.tokenAddress);
-    console.log("Decimals::" , Decimals);
+    console.log("Decimals::", Decimals);
     setDecimals(Decimals);
+  }
+
+  async function getHolders() {
+    const Holders = await returnHolders(props.tokenAddress, props.network);
+    setHolders(Holders);
   }
 
   //   const methods = [callERC20, callVerification, callCirculationSupply];
@@ -83,20 +89,14 @@ function Result(props) {
   useEffect(() => {
     getSymbol();
     getDecimals();
+    getHolders();
     async function callMethods() {
       await callCirculationSupply();
     }
 
     callMethods();
 
-    // let riskFactor = 0.0;
-    // if (!isVerified) {
-    //   setRiskFactor(100);
-    // } else if (isVerified && isERC20) {
-    //   riskFactor += 33.33;
-    //   riskFactor += (100 - circulation) / 3;
-    //   setRiskFactor(riskFactor);
-    // }
+    
 
     console.log(totalSupply);
 
@@ -149,7 +149,11 @@ function Result(props) {
             </div>
             <div className="flex gap-2 items-center">
               {/* <Checkmark /> */}
-              <p>Total Supply: {totalSupply}</p>
+              <p>Total Supply: {totalSupply.substring(0,totalSupply.length - decimals)}</p>
+              
+            </div>
+            <div>
+              <p>Holders: {Holders}</p>
             </div>
           </div>
         </div>
