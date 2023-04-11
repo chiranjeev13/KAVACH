@@ -6,15 +6,17 @@ contract Report {
     struct report{
         address _flaggedby;
         address _tokenAddress;
+        string _network;
         string _tokenName;
         string _description;
         uint256 count;
+
     }
     uint256 public ct = 0;
     report[] public Reports;
-    function regUser(address tokenAddress,string memory tokenName,string memory description) public returns(bool)
+    function regUser(address tokenAddress,string memory network,string memory tokenName,string memory description) public returns(bool)
     { 
-        Reports.push(report(msg.sender,tokenAddress,tokenName,description,ct));
+        Reports.push(report(msg.sender,tokenAddress,network,tokenName,description,ct));
         ct+=1;
         return true;
     }
