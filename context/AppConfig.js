@@ -23,7 +23,6 @@ export const AppProvider = ({ children }) => {
   const [network, setNetwork] = useState("Network");
   const [riskFactor, setRiskFactor] = useState(0);
   const [holders, setHolders] = useState(0);
-  const [provider, setProvider] = useState()
   // web3 provider
   const abi = contrAbi.abi;
   // "https://mainnet.infura.io/v3/13cbc4197182486485f1ebcb24068938"
@@ -44,9 +43,10 @@ export const AppProvider = ({ children }) => {
 
 
   // wallet connection
+  let provider
   const setupProvider = () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider)
+    const prov = new ethers.providers.Web3Provider(window.ethereum);
+    provider = prov
   }
 
 
