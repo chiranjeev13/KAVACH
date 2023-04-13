@@ -23,6 +23,7 @@ export const AppProvider = ({ children }) => {
   const [network, setNetwork] = useState("Network");
   const [riskFactor, setRiskFactor] = useState(0);
   const [holders, setHolders] = useState(0);
+  const [provider, setProvider] = useState()
   // web3 provider
   const abi = contrAbi.abi;
   // "https://mainnet.infura.io/v3/13cbc4197182486485f1ebcb24068938"
@@ -43,11 +44,17 @@ export const AppProvider = ({ children }) => {
 
 
   // wallet connection
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const setupProvider = () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider)
+  }
+
+
   const reportContractAddress = "0x2EFf285Bd711B1c6C3e9Bf1Cfd74Ed385aFe4A84";
   const reportContractABI = reportABI.abi
   useEffect(() => {
     if (window.ethereum) {
+      setupProvider();
       connectWallet();
     } else {
       alert("Please Install Metamask to continue!")
