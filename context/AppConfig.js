@@ -47,13 +47,22 @@ export const AppProvider = ({ children }) => {
   const reportContractAddress = "0x2EFf285Bd711B1c6C3e9Bf1Cfd74Ed385aFe4A84";
   const reportContractABI = reportABI.abi
   useEffect(() => {
-    connectWallet();
+    if (window.ethereum) {
+      connectWallet();
+    } else {
+      alert("Please Install Metamask to continue!")
+    }
   }, [])
 
   const requestAccount = async () => {
-    const accns = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    }); // prompt the user to connect one of their metamask accounts if they haven't  already connected
+    try {
+      const accns = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      }); // prompt the user to connect one of their metamask accounts if they haven't  already connected
+      console.log("Requested wallet accounts - ", accns)
+    } catch (e) {
+      console.log("Error occured in the requestAccount function")
+    }
   }
 
   const connectWallet = async () => {
