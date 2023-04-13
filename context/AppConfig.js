@@ -10,6 +10,7 @@ import contrAbi from "./abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { AnkrProvider } from "@ankr.com/ankr.js";
 import { Network } from "alchemy-sdk";
+import reportABI from "../contract/artifacts/contracts/Report.sol/Report.json"
 
 export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
@@ -29,6 +30,7 @@ export const AppProvider = ({ children }) => {
   //     "https://eth-mainnet.g.alchemy.com/v2/0VAqnL8By2MgfQ9IyZHwHaMGAhNwBtf2"
   // )
 
+
   const web3E = createAlchemyWeb3(
     "https://eth-mainnet.g.alchemy.com/v2/0VAqnL8By2MgfQ9IyZHwHaMGAhNwBtf2"
   );
@@ -38,6 +40,42 @@ export const AppProvider = ({ children }) => {
 
   const web3B = new AnkrProvider();
   const web3Ba = new createAlchemyWeb3("https://bsc-dataseed2.binance.org/");
+
+
+  // wallet connection
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const reportContractAddress = "0x2EFf285Bd711B1c6C3e9Bf1Cfd74Ed385aFe4A84";
+  const reportContractABI = reportABI.abi
+  useEffect(() => {
+    connectWallet();
+  }, [])
+
+  const requestAccount = async () => {
+    const accns = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    }); // prompt the user to connect one of their metamask accounts if they haven't  already connected
+  }
+
+  const connectWallet = async () => {
+    await requestAccount();
+    const signer = provider.getSigner();
+    const newsignedContract = new ethers.Contract(reportContractAddress, reportContractABI, signer);
+    console.log("connected");
+  }
+  // .. wallet connection
+
+  // contract interaction
+  const reportEntry = async (tokenAddress, network, tokenName, description) => {
+    try {
+      const signer = provider.getSigner();
+      const newsignedContract = new ethers.Contract(reportContractAddress, reportContractABI, signer);
+      const report = await newsignedContract.regUser(tokenAddress, network, tokenName, description);
+
+    } catch (error) {
+      alert("An error occured while registering a report, please make sure your wallet is connected to this application before you proceed")
+      console.log(error)
+    }
+  }
 
   const computeCirculation = async (tokenAddress, Network) => {
     console.log(tokenAddress);
@@ -508,6 +546,7 @@ export const AppProvider = ({ children }) => {
         getTokenDecimals,
         riskFactor,
         returnHolders,
+        reportEntry
       }}
     >
       {children}
