@@ -35,7 +35,7 @@ export default function Hero(props) {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
+        if (data.result > 0) {
           return true;
         }
       }
@@ -45,7 +45,7 @@ export default function Hero(props) {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
+        if (data.result > 0) {
           return true;
         }
       }
@@ -55,7 +55,7 @@ export default function Hero(props) {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
+        if (data.result > 0) {
           return true;
         }
       }
@@ -75,15 +75,11 @@ export default function Hero(props) {
       const ckB = await ERC20BoolCheck(token_address, "BSC");
 
       if (ckE) {
-        
         setNetwork("Ethereum");
-        
       } else if (ckP) {
         setNetwork("Polygon");
-        
       } else if (ckB) {
         setNetwork("BSC");
-        
       }
       setNetworkCheckLoading(false);
     } catch (err) {
