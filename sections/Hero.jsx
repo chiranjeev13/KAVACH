@@ -75,18 +75,15 @@ export default function Hero(props) {
       const ckB = await ERC20BoolCheck(token_address, "BSC");
 
       if (ckE) {
-        // console.log("@#@#-E", ckE);
+        
         setNetwork("Ethereum");
-        // props.setNetwork("Ethereum");
-        // return "Ethereum";
+        
       } else if (ckP) {
         setNetwork("Polygon");
-        // props.setNetwork("Polygon");
-        // return "Polygon";
+        
       } else if (ckB) {
         setNetwork("BSC");
-        // props.setNetwork("BSC");
-        // return "BSC";
+        
       }
       setNetworkCheckLoading(false);
     } catch (err) {

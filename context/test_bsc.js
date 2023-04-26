@@ -15,13 +15,15 @@ const erc = await web3B.getTokenHoldersCount({
   contractAddress: "0x4D2CEb9b3775515bFeAE34A7B6D8f0820C236eaF",
 });
 
-await web3B.getTokenTransfers({
+console.log("revvv....");
+const rev = await web3B.getTokenTransfers({
   blockchain: "bsc",
   contractAddress: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
 });
 
-console.log(price);
-console.log(erc.latestHoldersCount);
+// console.log(price);
+// console.log(erc.latestHoldersCount);
+//console.log(rev);
 
 const url = "https://bsc-dataseed1.binance.org/";
 const web3 = new Web3(url);
@@ -38,4 +40,9 @@ const tokenContract = await new web3Ba.eth.Contract(
   aBI,
   "0x2170Ed0880ac9A755fd29B2688956BD959F933F8"
 );
-console.log(await tokenContract.methods.symbol().call());
+// console.log(await tokenContract.methods.symbol().call());
+const tokenAddress = "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+const token = await fetch(
+  `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${tokenAddress}&apikey=G7SH27QM1YUK3EG2IYSNV42DP7TG8V5FM6`
+);
+console.log(await token.json());

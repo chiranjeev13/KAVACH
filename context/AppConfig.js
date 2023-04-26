@@ -9,8 +9,7 @@ import { ethers } from "ethers";
 import contrAbi from "./abi.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { AnkrProvider } from "@ankr.com/ankr.js";
-import { Network } from "alchemy-sdk";
-import reportABI from "../contract/artifacts/contracts/Report.sol/Report.json"
+
 
 export const AppProvider = ({ children }) => {
   const [isERC20, setIsERC20] = useState(false);
@@ -23,13 +22,8 @@ export const AppProvider = ({ children }) => {
   const [network, setNetwork] = useState("Network");
   const [riskFactor, setRiskFactor] = useState(0);
   const [holders, setHolders] = useState(0);
-  // web3 provider
-  const abi = contrAbi.abi;
-  // "https://mainnet.infura.io/v3/13cbc4197182486485f1ebcb24068938"
-  // const provider = new ethers.providers.JsonRpcProvider(
-  //     "https://eth-mainnet.g.alchemy.com/v2/0VAqnL8By2MgfQ9IyZHwHaMGAhNwBtf2"
-  // )
 
+  const abi = contrAbi.abi;
 
   const web3E = createAlchemyWeb3(
     "https://eth-mainnet.g.alchemy.com/v2/0VAqnL8By2MgfQ9IyZHwHaMGAhNwBtf2"
@@ -41,57 +35,57 @@ export const AppProvider = ({ children }) => {
   const web3B = new AnkrProvider();
   const web3Ba = new createAlchemyWeb3("https://bsc-dataseed2.binance.org/");
 
-
   // wallet connection
-  let provider
+  let provider;
   const setupProvider = () => {
     const prov = new ethers.providers.Web3Provider(window.ethereum);
-    provider = prov
-  }
+    provider = prov;
+  };
 
-
-  const reportContractAddress = "0x2EFf285Bd711B1c6C3e9Bf1Cfd74Ed385aFe4A84";
-  const reportContractABI = reportABI.abi
-  useEffect(() => {
-    if (window.ethereum) {
-      setupProvider();
-      connectWallet();
-    } else {
-      alert("Please Install Metamask to continue!")
-    }
-  }, [])
 
   const requestAccount = async () => {
     try {
       const accns = await window.ethereum.request({
         method: "eth_requestAccounts",
       }); // prompt the user to connect one of their metamask accounts if they haven't  already connected
-      console.log("Requested wallet accounts - ", accns)
+      console.log("Requested wallet accounts - ", accns);
     } catch (e) {
-      console.log("Error occured in the requestAccount function")
+      console.log("Error occured in the requestAccount function");
     }
-  }
+  };
+
 
   const connectWallet = async () => {
     await requestAccount();
     const signer = provider.getSigner();
-    const newsignedContract = new ethers.Contract(reportContractAddress, reportContractABI, signer);
+    const newsignedContract = new ethers.Contract(
+      reportContractAddress,
+      reportContractABI,
+      signer
+    );
     console.log("connected");
-  }
-  // .. wallet connection
+  };
 
-  // contract interaction
+
   const reportEntry = async (tokenAddress, network, tokenName, description) => {
     try {
       const signer = provider.getSigner();
-      const newsignedContract = new ethers.Contract(reportContractAddress, reportContractABI, signer);
-      const report = await newsignedContract.regUser(tokenAddress, network, tokenName, description);
-
+      const newsignedContract = new ethers.Contract(
+        reportContractAddress,
+        reportContractABI,
+        signer
+      );
+      const report = await newsignedContract.regUser(
+        tokenAddress,
+        network,
+        tokenName,
+        description
+      );
     } catch (error) {
-      alert("An error occured while registering a report, please make sure your wallet is connected to this application before you proceed")
+      alert("An error occured while registering a report, please make sure your wallet is connected to this application before you proceed");
       console.log(error)
     }
-  }
+  };
 
   const computeCirculation = async (tokenAddress, Network) => {
     console.log(tokenAddress);
@@ -343,8 +337,7 @@ export const AppProvider = ({ children }) => {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
-          //   setIsERC20(true);
+        if (data.result > 0) {
           setTotalSupply(data.result);
           console.log(totalSupply);
           return true;
@@ -357,8 +350,7 @@ export const AppProvider = ({ children }) => {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
-          //   setIsERC20(true);
+        if (data.result > 0) {
           setTotalSupply(data.result);
           console.log(data.result.substring(0, 4));
           return true;
@@ -371,7 +363,7 @@ export const AppProvider = ({ children }) => {
         );
         const data = await token.json();
         console.log("data", data.result);
-        if (data.result) {
+        if (data.result > 0) {
           //   setIsERC20(true);
           setTotalSupply(data.result);
           console.log(data.result.substring(0, 4));
@@ -381,11 +373,38 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       console.log("Error occured while ERC20Check function - ", error);
-      //   return false;
     }
-    // return false;
   };
 
+  const returnNetwork = async (tokenAddress) => {
+    try{ // detect which network is the token from
+      const ckE = await ERC20BoolCheck(tokenAddress , "Ethereum");
+      const ckP = await ERC20BoolCheck(tokenAddress, "Polygon");
+      const ckB = await ERC20BoolCheck(tokenAddress,"BSC");
+
+      if (ckE)
+      {
+        console.log("@#@#-E",ckE)
+        setNetwork("Ethereum")
+        return "Ethereum"
+      }
+      else if(ckP)
+      {
+        console.log("@#@#-P",ckP)
+        setNetwork("Polygon")
+        return "Polygon"
+      }
+      else if(ckB)
+      {
+        setNetwork("BSC")
+        console.log("@#@#-B",ckB)
+        return "BSC"
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
   const returnOwner = async (tokenAddress) => {
     if (network === "Ethereum") {
       try {
@@ -492,18 +511,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // const returnABI = async (tokenAddress) => {
-  //     try {
-  //         const abi = await fetch(`https://api-goerli.etherscan.io/api?module=contract&action=getabi&address=${tokenAddress}&apikey=VH1C8WZCNYE12YZB3M5YETM82KGPNHI6SI`)
-  //         const data = await abi.json()
-  //         setContractABI(data.result)
-  //         console.log(contractABI)
-
-  //     } catch (error) {
-  //         console.log("Error generated by returnABI function", error)
-  //     }
-  // }
-
+  // 
   //HOLDERS
   const returnHolders = async (tokenAddress, Network) => {
     if (Network === "Ethereum") {
@@ -557,12 +565,13 @@ export const AppProvider = ({ children }) => {
         computeCirculation,
         getTokenSymbol,
         verifiedOrNot,
+        returnNetwork,
         setNetwork,
         network,
         getTokenDecimals,
         riskFactor,
         returnHolders,
-        reportEntry
+        reportEntry,
       }}
     >
       {children}
