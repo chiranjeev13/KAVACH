@@ -7,6 +7,8 @@ import { title } from "../constants";
 import styles from "../styles";
 import { slideIn, staggerContainer, textVariant } from "../utils/motion";
 import { AppConfig } from "@/context/AppConfig";
+import { CircularProgress } from "@mui/material";
+// import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Hero(props) {
   const {
@@ -21,8 +23,78 @@ export default function Hero(props) {
   } = useContext(AppConfig);
   const [tokenAddress, setTokenAddress] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-  const networks = ["Polygon", "Ethereum","BSC"];
+  const networks = ["Polygon", "Ethereum", "BSC"];
+  const [networkCheckLoading, setNetworkCheckLoading] = useState(false);
   // console.log(network);
+
+  const ERC20BoolCheck = async (tkAddress, Network) => {
+    try {
+      if (Network === "Polygon") {
+        const token = await fetch(
+          `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${tkAddress}&apikey=G7SH27QM1YUK3EG2IYSNV42DP7TG8V5FM6`
+        );
+        const data = await token.json();
+        console.log("data", data.result);
+        if (data.result) {
+          return true;
+        }
+      }
+      if (Network === "Ethereum") {
+        const token = await fetch(
+          `https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${tkAddress}&apikey=VH1C8WZCNYE12YZB3M5YETM82KGPNHI6SI`
+        );
+        const data = await token.json();
+        console.log("data", data.result);
+        if (data.result) {
+          return true;
+        }
+      }
+      if (Network === "BSC") {
+        const token = await fetch(
+          `https://api.bscscan.com/api?module=stats&action=tokensupply&contractaddress=${tkAddress}&apikey=XGW3B19Q89KJFXHJ9YZJRAGSRT8CQJD1CX`
+        );
+        const data = await token.json();
+        console.log("data", data.result);
+        if (data.result) {
+          return true;
+        }
+      }
+    } catch (error) {
+      console.log("Error occured while ERC20Check function - ", error);
+      //   return false;
+    }
+    // return false;
+  };
+
+  const returnNetwork = async (token_address) => {
+    setNetworkCheckLoading(true);
+    try {
+      // detect which network is the token from
+      const ckE = await ERC20BoolCheck(token_address, "Ethereum");
+      const ckP = await ERC20BoolCheck(token_address, "Polygon");
+      const ckB = await ERC20BoolCheck(token_address, "BSC");
+
+      if (ckE) {
+        // console.log("@#@#-E", ckE);
+        setNetwork("Ethereum");
+        // props.setNetwork("Ethereum");
+        // return "Ethereum";
+      } else if (ckP) {
+        setNetwork("Polygon");
+        // props.setNetwork("Polygon");
+        // return "Polygon";
+      } else if (ckB) {
+        setNetwork("BSC");
+        // props.setNetwork("BSC");
+        // return "BSC";
+      }
+      setNetworkCheckLoading(false);
+    } catch (err) {
+      console.log(err);
+      setNetworkCheckLoading(false);
+    }
+  };
+
   return (
     <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
       <motion.div
@@ -67,20 +139,28 @@ export default function Hero(props) {
                   className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-200"
                   type="button"
                 >
-                  {network}{" "}
-                  <svg
-                    aria-hidden="true"
-                    className="w-4 h-4 ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
+                  {networkCheckLoading ? (
+                    <div className="w-1/3">
+                      <CircularProgress size={20} />
+                    </div>
+                  ) : (
+                    <div className="flex-shrink-0 z-10 inline-flex items-center text-sm font-medium text-center text-gray-900 rounded-l-lg hover:bg-gray-200">
+                      {network}
+                      <svg
+                        aria-hidden="true"
+                        className="w-4 h-4 ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </div>
+                  )}
                 </button>
                 <div
                   id="dropdown"
@@ -115,6 +195,9 @@ export default function Hero(props) {
                     onChange={(e) => {
                       setTokenAddress(e.target.value);
                       props.setTokenAddress(e.target.value);
+                      if (e.target.value.length > 15) {
+                        returnNetwork(e.target.value);
+                      }
                     }}
                     type="search"
                     id="search-dropdown"
