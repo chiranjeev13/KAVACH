@@ -76,10 +76,13 @@ export default function Hero(props) {
 
       if (ckE) {
         setNetwork("Ethereum");
+        props.setNetwork("Ethereum");
       } else if (ckP) {
         setNetwork("Polygon");
+        props.setNetwork("Polygon");
       } else if (ckB) {
         setNetwork("BSC");
+        props.setNetwork("BSC");
       }
       setNetworkCheckLoading(false);
     } catch (err) {
